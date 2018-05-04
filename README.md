@@ -47,3 +47,22 @@ testing step.
 
 ex: python3 test.py myMODEL
 該指令會到”model”這個資料夾下，抓取myMODEL.h5，作出預測，並顯示MSE loss。
+
+
+### statistical model
+
+```python3.6 CNN_stat_augmentation/stat_model.py```
+
+parameters including volcabulary count range and usage of idf can be set in the last lines.
+
+### CNN_model.py (tensorflow 1.6 needed)
+
+```python3.6 CNN_stat_augmentation/CNN_model.py```
+
+parameters for building and training the model can be set in the last lines.
+
+### data_augmentation.py:
+
+```python3.6 CNN_stat_augmentation/data_augmentation.py```
+
+parameters including produced sample numbers and sample length can be set in the last lines.
