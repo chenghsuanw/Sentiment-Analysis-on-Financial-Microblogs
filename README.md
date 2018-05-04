@@ -14,3 +14,7 @@ download all files from google drive (url is in the report)
 ```cd <directory>``` <br>
 and then <br>
 ```python3 project.py```
+
+run the experiment <br>
+```bash exp.sh```
+
