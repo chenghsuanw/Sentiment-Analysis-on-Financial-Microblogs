@@ -11,6 +11,6 @@ default the code will execute infer_doc2vec, also infer_word2vec/train_word2vec/
 
 download all files from google drive (url is in the report)
 
-```cd <directory>```
-then
+```cd <directory>``` <br>
+and then <br>
 ```python project.py```
