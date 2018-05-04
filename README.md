@@ -6,3 +6,11 @@
 ```python3.6 word2vec_svr/doc2vec.py```
 
 default the code will execute infer_doc2vec, also infer_word2vec/train_word2vec/train_doc2vec are implemented
+
+### LSTM Method 1
+
+download all files from google drive (url is in the report)
+
+```cd <directory>```
+then
+```python project.py```
