@@ -8,18 +8,17 @@ import gensim
 import pickle
 
 
-def train_word2vec():
-    X, Y = data_processor.read_data('../NLP_Project 1/training_set.json')
-    X_t, Y_t = data_processor.read_data('../NLP_Project 1/test_set.json')
+def train_word2vec(args):
+    X, Y = data_processor.read_data(args.train_path) X_t, Y_t = data_processor.read_data(args.test_path)
 
     documents = np.concatenate((X, X_t), axis=0)
     model = Word2Vec(documents, size=300, window=8, min_count=0, workers=4)
     model.save('model/word2vec')
 
 
-def train_doc2vec():
-    X, Y = data_processor.read_data('../NLP_Project 1/training_set.json')
-    X_t, Y_t = data_processor.read_data('../NLP_Project 1/test_set.json')
+def train_doc2vec(args):
+    X, Y = data_processor.read_data(args.train_path)
+    X_t, Y_t = data_processor.read_data(args.test_path)
 
     documents = [TaggedDocument(x, f'{idx}') for idx, x in enumerate(np.concatenate((X, X_t), axis=0))]
     model = Doc2Vec(documents, vector_size=300, window=8, min_count=0, workers=4)
@@ -49,21 +48,35 @@ def train_svr(X, Y, X_t, Y_t):
     print(f'micro:{f1_score(sentiment_toclass(Y_t), sentiment_toclass(Y_pred), average="micro")}')
 
 
-def main():
-    np.random.seed(1126)
-
-    X, Y = data_processor.doc2vec_feature('../NLP_Project 1/training_set.json')
-    X_t, Y_t = data_processor.doc2vec_feature('../NLP_Project 1/test_set.json')
+def infer_doc2vec(args):
+    X, Y = data_processor.doc2vec_feature(args.train_path)
+    X_t, Y_t = data_processor.doc2vec_feature(args.test_path)
     train_svr(X, Y, X_t, Y_t)
 
 
-    #train_word2vec()
-    #train_doc2vec()
-    #doc2vec_feature()
+def infer_word2vec(args):
+    X, Y = data_processor.word2vec_feature_max(args.train_path)
+    X_t, Y_t = data_processor.word2vec_feature_max(args.test_path)
+    train_svr(X, Y, X_t, Y_t)
 
-    #model = gensim.models.word2vec.Word2Vec([doc.split() for doc in X + X_t], size=300, window=5, min_count=0, workers=4)
-    #model.save('model/word2vec')
+
+def main(args):
+    np.random.seed(1126)
+
+    infer_doc2vec(args)
+    #infer_word2vec(args)
+    #train_word2vec(args)
+    #train_doc2vec(args)
+
+
+def parse_args():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train_path', default='../training_set.json')
+    parser.add_argument('--test_path', default='../test_set.json')
+    args = parser.parse_args()
+    return args
 
 
 if __name__ == '__main__':
-    main()
+    main(parse_args())
